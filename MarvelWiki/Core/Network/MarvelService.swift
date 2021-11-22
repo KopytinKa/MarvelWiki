@@ -39,6 +39,28 @@ final class MarvelService {
             .eraseToAnyPublisher()
     }
     
+    func loadCharacters() -> AnyPublisher<ResponseBobyDTO, Error> {
+        let path = "/v1/public/characters"
+        let url = self.getUrlBy(path: path)
+                
+        return URLSession.shared
+            .dataTaskPublisher(for: url)
+            .print("🦁")
+            .receive(on: DispatchQueue.main)
+            .map(\.data)
+            .decode(type: ResponseBobyDTO.self, decoder: decoder)
+            .mapError({ error -> Error in
+                switch error {
+                case is URLError:
+                    return Error.unreachableAddress(url: url)
+                default:
+                    return Error.invalidResponse
+                }
+            })
+            .share()
+            .eraseToAnyPublisher()
+    }
+    
     func loadComicsById(_ id: Int) -> AnyPublisher<ResponseBobyDTO, Error> {
         let path = "/v1/public/comics/\(id)"
         let url = self.getUrlBy(path: path)
