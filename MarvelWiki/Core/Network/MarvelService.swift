@@ -18,7 +18,7 @@ final class MarvelService {
     
     private let decoder = JSONDecoder()
     
-    func loadCharacterById(_ id: Int) -> AnyPublisher<ResponseBobyDTO, Error> {
+    func loadCharacterById(_ id: Int) -> AnyPublisher<ResponseBobyDTO<CharacterDTO>, Error> {
         let path = "/v1/public/characters/\(id)"
         let url = self.getUrlBy(path: path)
                 
@@ -27,7 +27,7 @@ final class MarvelService {
             .print("🐶")
             .receive(on: DispatchQueue.main)
             .map(\.data)
-            .decode(type: ResponseBobyDTO.self, decoder: decoder)
+            .decode(type: ResponseBobyDTO<CharacterDTO>.self, decoder: decoder)
             .mapError({ error -> Error in
                 switch error {
                 case is URLError:
@@ -39,7 +39,7 @@ final class MarvelService {
             .eraseToAnyPublisher()
     }
     
-    func loadCharacters() -> AnyPublisher<ResponseBobyDTO, Error> {
+    func loadCharacters() -> AnyPublisher<ResponseBobyDTO<CharacterDTO>, Error> {
         let path = "/v1/public/characters"
         let url = self.getUrlBy(path: path)
                 
@@ -48,7 +48,7 @@ final class MarvelService {
             .print("🦁")
             .receive(on: DispatchQueue.main)
             .map(\.data)
-            .decode(type: ResponseBobyDTO.self, decoder: decoder)
+            .decode(type: ResponseBobyDTO<CharacterDTO>.self, decoder: decoder)
             .mapError({ error -> Error in
                 switch error {
                 case is URLError:
@@ -61,7 +61,7 @@ final class MarvelService {
             .eraseToAnyPublisher()
     }
     
-    func loadComicsById(_ id: Int) -> AnyPublisher<ResponseBobyDTO, Error> {
+    func loadComicsById(_ id: Int) -> AnyPublisher<ResponseBobyDTO<ComicsDTO>, Error> {
         let path = "/v1/public/comics/\(id)"
         let url = self.getUrlBy(path: path)
                 
@@ -70,7 +70,7 @@ final class MarvelService {
             .print("🐭")
             .receive(on: DispatchQueue.main)
             .map(\.data)
-            .decode(type: ResponseBobyDTO.self, decoder: decoder)
+            .decode(type: ResponseBobyDTO<ComicsDTO>.self, decoder: decoder)
             .breakpoint(receiveOutput: { value in
                 return value.code != 200
             })
