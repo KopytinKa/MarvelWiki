@@ -28,10 +28,9 @@ class CharacterViewModel: ObservableObject {
                     .eraseToAnyPublisher()
             }
             .sink(receiveCompletion: { print($0) }, receiveValue: {
-                if let characters = $0.data.results as? [CharacterDTO] {
-                    self.characters = characters
-                    self.makeDisplayItems(from: characters)
-                }
+                let characters = $0.data.results
+                self.characters = characters
+                self.makeDisplayItems(from: characters)
             })
             .store(in: &self.subscriptions)
     }
@@ -52,10 +51,9 @@ class CharacterViewModel: ObservableObject {
                 print("🐱 request cancelled")
             })
             .sink(receiveCompletion: { print($0) }, receiveValue: {
-                if let characters = $0.data.results as? [CharacterDTO] {
-                    self.characters = characters
-                    self.makeDisplayItems(from: characters)
-                }
+                let characters = $0.data.results
+                self.characters = characters
+                self.makeDisplayItems(from: characters)
             })
             .store(in: &self.subscriptions)
     }

@@ -29,10 +29,9 @@ class ComicsViewModel: ObservableObject {
     private func fetchComics() {
         self.marvelService.loadComicsById(82967)
             .sink(receiveCompletion: { print($0) }, receiveValue: {
-                if let comics = $0.data.results as? [ComicsDTO] {
-                    self.comics = comics
-                    self.makeDisplayItems(from: comics)
-                }
+                let comics = $0.data.results
+                self.comics = comics
+                self.makeDisplayItems(from: comics)
             })
             .store(in: &self.subscriptions)
     }

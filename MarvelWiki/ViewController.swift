@@ -27,31 +27,29 @@ class ViewController: UIViewController {
         
         shared
             .sink(
-               receiveCompletion: { _ in },
-               receiveValue: {
-                   if let character = $0.data.results as? [CharacterDTO] {
-                       print("Subscription 1:", character[0].name)
-                   }
-               }
+                receiveCompletion: { _ in },
+                receiveValue: {
+                    let character = $0.data.results
+                    print("Subscription 1:", character[0].name)
+                }
             )
             .store(in: &self.subscriptions)
         
         shared
             .sink(
-               receiveCompletion: { _ in },
-               receiveValue: {
-                   if let character = $0.data.results as? [CharacterDTO] {
-                       print("Subscription 2:", character[1].name)
-                   }
-               }
+                receiveCompletion: { _ in },
+                receiveValue: {
+                   let character = $0.data.results
+                   print("Subscription 2:", character[1].name)
+                }
             )
             .store(in: &self.subscriptions)
         
         // MARK: - Timer
         
-        var ids = [1011334, 1010699, 1009149, 1011266, 1017851]
+        let ids = [1011334, 1010699, 1009149, 1011266, 1017851]
         
-        let subscription = Timer
+        Timer
             .publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
             .scan(0) { counter, _ in counter + 1 }
