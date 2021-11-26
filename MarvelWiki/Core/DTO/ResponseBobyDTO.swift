@@ -7,16 +7,16 @@
 
 import Foundation
 
-class ResponseBobyDTO: Codable {
+class ResponseBobyDTO<T: Codable>: Codable {
     let code: Int
     let status: String
     let copyright: String
     let attributionText: String
     let attributionHTML: String
     let etag: String
-    let data: DataDTO
+    let data: DataDTO<T>
     
-    init(code: Int, status: String, copyright: String, attributionText: String, attributionHTML: String, etag: String, data: DataDTO) {
+    init(code: Int, status: String, copyright: String, attributionText: String, attributionHTML: String, etag: String, data: DataDTO<T>) {
         self.code = code
         self.status = status
         self.copyright = copyright
