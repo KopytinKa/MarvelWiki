@@ -59,7 +59,6 @@ class ViewController: UIViewController {
                 }
             }
             .store(in: &self.subscriptions)
-
     }
 }
 
