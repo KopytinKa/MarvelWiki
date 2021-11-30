@@ -57,6 +57,7 @@ final class MarvelService {
                     return Error.invalidResponse
                 }
             })
+            .retry(2)
             .share()
             .eraseToAnyPublisher()
     }
